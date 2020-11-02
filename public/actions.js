@@ -35,13 +35,19 @@ function addUser(videoEl, stream) {
   container.append(videoEl);
 }
 function sendStream(stream, uId) {
-    let connection=peer.call(uId, stream);
-    const newVideo=document.createElement('video');
-    connection.on('stream', (newStream)=> {
-        addUser(newVideo, newStream);
-    });
-    connection.on('close', () => {
-        newVideo.remove();
-    });
-    tracker[uId]=connection;
+    setTimeout(function () {
+        console.log('connecting..');
+        const connection=peer.call(uId, stream);
+        console.log(connection);
+        const newVideo=document.createElement('video');
+        connection.on('stream', (newStream)=> {
+            console.log(2);
+            addUser(newVideo, newStream);
+        });
+        console.log(connection);
+        connection.on('close', () => {
+            newVideo.remove();
+        });
+        tracker[uId]=connection;
+    }, 3000);
 }
